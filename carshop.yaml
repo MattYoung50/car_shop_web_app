@@ -53,7 +53,7 @@ paths:
                         
 
     post:
-      summary: Add new car to system
+      summary: Add a new car to system
       requestBody:
         required: true
         content:
@@ -98,9 +98,9 @@ paths:
           description: Car created successfully
         '500':
           description: Internal server error
-  /cars/{vin}:
+  /cars/{id}:
     get:
-      summary: Get a car based on vin number
+      summary: Get a car based on id number
       responses:
         '200':
           description: Successful response
@@ -142,7 +142,7 @@ paths:
                       workers:
                         type: string
     put:
-      summary: Update a car in the system
+      summary: Update a car based on id number
       requestBody:
         required: true
         content:
@@ -188,7 +188,7 @@ paths:
         '500':
           description: Internal server error
     delete:
-      summary: Delete car from the system
+      summary: Delete a car based on id number
       responses:
         '200':
           description: Car deleted successfully

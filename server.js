@@ -1,23 +1,35 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 
-// Create an Express application
 const app = express();
 let db;
-// MongoDB connection URI
 const uri = 'mongodb://mongo:27017/mydatabase';
 
 async function dbConnect() {
-// Connect to MongoDB
   const client = await MongoClient.connect(uri);
   console.log('Connected to MongoDB');
   db = await client.db('mydatabase');
-  const result = await db.collection('customers').insertOne(
+  const result = await db.collection('cars').insertOne(
     {
-      name: 'John Doe',
-      age: 30,
-      city: 'New York',
-      country: 'USA',
+      vin: 'J87AH128BDEI29E',
+      plate: 'AHN39ND0',
+      state: 'New York',
+      make: 'Honda',
+      model: 'Civic',
+      year: '2021',
+      owner: 
+      {
+        name: 'Joe Biden',
+        address: 'White House Washington DC',
+        license: '18BD39DE3'
+      },
+      ticket:
+      {
+        description: 'Engine shaking when reaching 65 mph',
+        in_time: '06/24/2023 9:10 AM CST',
+        out_time: 'TBD',
+        workers: 'Donald Trump'
+      }
     }
   );
   console.log(result);
@@ -25,10 +37,8 @@ async function dbConnect() {
 
 app.use(express.json())
 
-
-// Define a route handler for the root path
-app.get('/customers', (req, res) => {
-    db.collection('customers').find().toArray().then((docs) => {
+app.get('/cars', (req, res) => {
+    db.collection('cars').find().toArray().then((docs) => {
       res.json(docs);
     }).catch(err => {
       console.error('Failed to fetch documents from MongoDB:', err);
@@ -36,10 +46,10 @@ app.get('/customers', (req, res) => {
     })
 });
 
-app.post('/customers', (req, res) => {
+app.post('/cars', (req, res) => {
   const body = req.body
   console.log(body);
-  db.collection('customers').insertOne(body).then((docs) => {
+  db.collection('cars').insertOne(body).then((docs) => {
     res.status(201).send({success: true});
   }).catch(err => {
     console.error('Failed to insert customer to MongoDB:', err);
