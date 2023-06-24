@@ -76,6 +76,18 @@ app.delete('/cars/:id', (req, res) => {
   })
 });
 
+app.put('/cars/:id', (req, res) => {
+  console.log("Received put request")
+  var id = req.params.id;
+  console.log("id received from put request " + id)
+  db.collection('cars').updateOne({_id: new ObjectId(id)}, {$set: req.body}).then((err, docs) => {
+    res.status(200).end()
+  }).catch(err => {
+    console.error('Failed to fetch item by id from MongoDB:', err);
+    res.status(500).send('Internal Server Error');
+  })
+});
+
 app.post('/cars', (req, res) => {
   console.log("Received post request")
   const body = req.body
