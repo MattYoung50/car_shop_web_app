@@ -1,0 +1,197 @@
+openapi: 3.0.0
+info:
+  title: Express.js Car Shop API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /cars:
+    get:
+      summary: Get all cars in system
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    vin:
+                      type: string
+                    plate:
+                      type: string
+                    state:
+                      type: string
+                    make:
+                      type: string
+                    model:
+                      type: string
+                    year:
+                      type: string
+                    owner:
+                      type: object
+                      properties:
+                        name: 
+                          type: string
+                        address:
+                          type: string
+                        license:
+                          type: string
+                    ticket:
+                      type: object
+                      properties:
+                        description:  
+                          type: string
+                        in_time:
+                          type: string
+                        out_time:
+                          type: string
+                        workers:
+                          type: string
+                        
+
+    post:
+      summary: Add new car to system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vin:
+                  type: string
+                plate:
+                  type: string
+                state:
+                  type: string
+                make:
+                  type: string
+                model:
+                  type: string
+                year:
+                  type: string
+                owner:
+                  type: object
+                  properties:
+                    name: 
+                      type: string
+                    address:
+                      type: string
+                    license:
+                      type: string
+                ticket:
+                  type: object
+                  properties:
+                    description:  
+                      type: string
+                    in_time:
+                      type: string
+                    out_time:
+                      type: string
+                    workers:
+                      type: string
+      responses:
+        '200':
+          description: Car created successfully
+        '500':
+          description: Internal server error
+  /cars/{vin}:
+    get:
+      summary: Get a car based on vin number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vin:
+                    type: string
+                  plate:
+                    type: string
+                  state:
+                    type: string
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: string
+                  owner:
+                    type: object
+                    properties:
+                      name: 
+                        type: string
+                      address:
+                        type: string
+                      license:
+                        type: string
+                  ticket:
+                    type: object
+                    properties:
+                      description:  
+                        type: string
+                      in_time:
+                        type: string
+                      out_time:
+                        type: string
+                      workers:
+                        type: string
+    put:
+      summary: Update a car in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vin:
+                  type: string
+                plate:
+                  type: string
+                state:
+                  type: string
+                make:
+                  type: string
+                model:
+                  type: string
+                year:
+                  type: string
+                owner:
+                  type: object
+                  properties:
+                    name: 
+                      type: string
+                    address:
+                      type: string
+                    license:
+                      type: string
+                ticket:
+                  type: object
+                  properties:
+                    description:  
+                      type: string
+                    in_time:
+                      type: string
+                    out_time:
+                      type: string
+                    workers:
+                      type: string
+      responses:
+        '200':
+          description: Car updated successfully
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete car from the system
+      responses:
+        '200':
+          description: Car deleted successfully
+        '500':
+          description: Internal server error
+
