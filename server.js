@@ -1,6 +1,5 @@
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
-//var ObjectId = require('mongodb').ObjectId
 
 const app = express();
 let db;
