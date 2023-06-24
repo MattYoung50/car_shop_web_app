@@ -39,6 +39,7 @@ async function dbConnect() {
 app.use(express.json())
 
 app.get('/cars', (req, res) => {
+  console.log("Received get request")
     db.collection('cars').find().toArray().then((docs) => {
       res.json(docs);
     }).catch(err => {
@@ -48,12 +49,13 @@ app.get('/cars', (req, res) => {
 });
 
 app.get('/cars/:id', (req, res) => {
+  console.log("Received get request by id")
   var id = req.params.id;
   console.log("id received from get request " + id)
   db.collection('cars').findOne({_id: new ObjectId(id)}).then(docs => {
     console.log("in callback with docs of: " + docs)
     if (!docs) {
-      return res.status(404).end();
+      return res.status(401).end();
     }
     res.json(docs);
   }).catch(err => {
@@ -62,7 +64,20 @@ app.get('/cars/:id', (req, res) => {
   })
 });
 
+app.delete('/cars/:id', (req, res) => {
+  console.log("Received delete request")
+  var id = req.params.id;
+  console.log("id received from delete request " + id)
+  db.collection('cars').deleteOne({_id: new ObjectId(id)}).then((err, docs) => {
+    res.status(200).end()
+  }).catch(err => {
+    console.error('Failed to fetch item by id from MongoDB:', err);
+    res.status(500).send('Internal Server Error');
+  })
+});
+
 app.post('/cars', (req, res) => {
+  console.log("Received post request")
   const body = req.body
   console.log(body);
   db.collection('cars').insertOne(body).then((docs) => {
