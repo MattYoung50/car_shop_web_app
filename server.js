@@ -1,5 +1,6 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
+//var ObjectId = require('mongodb').ObjectId
 
 const app = express();
 let db;
@@ -44,6 +45,21 @@ app.get('/cars', (req, res) => {
       console.error('Failed to fetch documents from MongoDB:', err);
       res.status(500).send('Internal Server Error');
     })
+});
+
+app.get('/cars/:id', (req, res) => {
+  var id = req.params.id;
+  console.log("id received from get request " + id)
+  db.collection('cars').findOne({_id: new ObjectId(id)}).then(docs => {
+    console.log("in callback with docs of: " + docs)
+    if (!docs) {
+      return res.status(404).end();
+    }
+    res.json(docs);
+  }).catch(err => {
+    console.error('Failed to fetch item by id from MongoDB:', err);
+    res.status(500).send('Internal Server Error');
+  })
 });
 
 app.post('/cars', (req, res) => {
