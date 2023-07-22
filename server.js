@@ -1,5 +1,6 @@
 const express = require('express');
 const { MongoClient, ObjectId } = require('mongodb');
+const getPriceInfo = require('./soap-client');
 
 const app = express();
 let db;
@@ -97,6 +98,18 @@ app.post('/cars', (req, res) => {
     console.error('Failed to insert customer to MongoDB:', err);
     res.status(500).send('Internal Server Error');
   })
+});
+
+app.get('/cars/partprice/:id', async (req, res) => {
+  try {
+    const soapPriceInfo = await getPriceInfo({id: req.params.id});
+    res.json({
+      ...soapPriceInfo,
+    });
+  } catch (err) {
+    console.error('Failed to fetch documents from MongoDB:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // Start the server on port 3000

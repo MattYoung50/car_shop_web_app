@@ -141,6 +141,21 @@ paths:
                         type: string
                       workers:
                         type: string
+  /cars/partprice/{id}:
+    get:
+      summary: Get a car part price based on id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: string
+                  deliverydate:
+                    type: string
     put:
       summary: Update a car based on id number
       requestBody:

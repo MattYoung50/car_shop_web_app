@@ -1,0 +1,38 @@
+<definitions name = "MyService"
+             targetNamespace = "http://www.examples.com/wsdl/MyService.wsdl"
+             xmlns = "http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns = "http://www.examples.com/wsdl/MyService.wsdl"
+             xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+    <message name="PriceLookupRequest">
+        <part name="id" type="xsd:string"/>
+    </message>
+    <message name="PriceLookupResponse">
+        <part name="price" type="xsd:string"/>
+        <part name="deliverydate" type="xsd:string"/>
+    </message>
+    <portType name="MyPort">
+        <operation name="PriceLookup">
+            <input message="tns:PriceLookupRequest"/>
+            <output message="tns:PriceLookupResponse"/>
+        </operation>
+    </portType>
+    <binding name = "PriceLookup_Binding" type="tns:MyPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="PriceLookup">
+            <soap:operation soapAction="PriceLookup"/>
+            <input>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:MyService" use="encoded"/>
+            </input>
+            <output>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:MyService" use="encoded"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="MyService">
+        <documentation>WSDL File for MyService</documentation>
+        <port binding="tns:PriceLookup_Binding" name="MyPort">
+            <soap:address location = "http://soapapp:8000/PriceLookup/" />
+        </port>
+    </service>
+</definitions>
