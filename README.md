@@ -82,6 +82,11 @@ curl --location --request PUT 'http://localhost:3000/cars/6496fb909aca1913801a42
 curl --location --request DELETE 'http://localhost:3000/cars/649732c1f3c1ee458b9174c4'
 ```
 
+`GET: To get part price and delivery date by id using a soap web service`
+```shell
+curl --location 'http://localhost:3000/cars/partprice/1234'
+```
+
 To run, 
 ```shell
 docker-compose build 
