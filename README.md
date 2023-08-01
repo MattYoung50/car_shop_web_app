@@ -1,3 +1,5 @@
+Author: Matthew Young CS 535
+
 # Example Node/Express RESTFul Server
 
 ## Running
